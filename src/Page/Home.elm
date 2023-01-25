@@ -1,10 +1,5 @@
 module Page.Home exposing (Model, Msg, init, subscriptions, update, view)
 
-import Data.Budget as Budget exposing (Budget)
-import Data.Category as Category exposing (Category)
-import Data.Log as Log exposing (Log)
-import Data.Money as Money exposing (Money)
-import Data.User as User exposing (User)
 import Dict exposing (Dict)
 import Html exposing (Html)
 import Html.Attributes as Attributes
