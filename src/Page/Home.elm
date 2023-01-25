@@ -49,6 +49,12 @@ items =
     , ( 10, "Filled the bowl 🥣" )
     , ( 11, "Floater \u{1F6DF}" )
     , ( 12, "Pebble Beach ⛳️" )
+    , ( 13, "False Alarm 🚨" )
+    , ( 14, "Just gave birth \u{1FAC3}" )
+    , ( 15, "Like Clockwork ☕️" )
+    , ( 16, "Unfamiliar Smell 👃" )
+    , ( 17, "Legs fell asleep 💤" )
+    , ( 18, "Multi-Flusher 🚽" )
     ]
 
 
@@ -133,7 +139,7 @@ viewItemButton model ( key, itemName ) =
     Html.button
         [ Events.onClick (ClickedItem ( key, itemName ))
         , Attributes.classList
-            [ ( "border border-white rounded-md px-4 font-semibold text-sm h-20 leading-snug", True )
+            [ ( "border border-white rounded-md px-3  text-center font-semibold text-sm h-20 leading-snug", True )
             , ( "bg-[#663217]", isSelected )
             ]
         ]
