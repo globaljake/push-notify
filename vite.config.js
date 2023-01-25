@@ -5,18 +5,19 @@ export default defineConfig({
   plugins: [elmPlugin({})],
   publicDir: "public",
   build: {
-    emptyOutDir: false,
+    emptyOutDir: true,
     outDir: "dist",
     manifest: false,
     brotliSize: true,
     rollupOptions: {
       input: {
-        app: "src/index.js",
+        app: "index.html",
+        images: "public/images/icons-180.png",
       },
-      output: {
-        assetFileNames: "assets/[name].[ext]",
-        entryFileNames: "assets/[name].js",
-      },
+      // output: {
+      //   assetFileNames: "assets/[name].[ext]",
+      //   entryFileNames: "assets/[name].js",
+      // },
     },
   },
 });

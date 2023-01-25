@@ -51,6 +51,9 @@ items =
     , ( 7, "No wiper ✨✨" )
     , ( 8, "Passed out pushing" )
     , ( 9, "Lost 5lbs ⚖️" )
+    , ( 10, "Filled the bowl 🥣" )
+    , ( 11, "Floater \u{1F6DF}" )
+    , ( 12, "Pebble Beach ⛳️" )
     ]
 
 
@@ -99,7 +102,7 @@ view session (Model model) =
 
 viewContent : Session -> Internal -> Html Msg
 viewContent session model =
-    Html.div [ Attributes.class "p-6  space-y-6" ]
+    Html.div [ Attributes.class "p-4  space-y-6" ]
         [ Html.div [ Attributes.class "text-center" ]
             [ Html.div [ Attributes.class "flex justify-center text-center" ]
                 [ Html.img [ Attributes.class "w-24", Attributes.src "/images/logo.png" ] []
@@ -135,7 +138,7 @@ viewItemButton model ( key, itemName ) =
     Html.button
         [ Events.onClick (ClickedItem ( key, itemName ))
         , Attributes.classList
-            [ ( "border border-white rounded-md p-4 font-semibold text-sm h-28", True )
+            [ ( "border border-white rounded-md px-4 font-semibold text-sm h-20 leading-tight", True )
             , ( "bg-[#663217]", isSelected )
             ]
         ]
