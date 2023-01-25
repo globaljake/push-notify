@@ -42,14 +42,14 @@ init session =
 
 items : List ( Int, String )
 items =
-    [ ( 1, "Blew mud 💨💩" )
+    [ ( 1, "Blew Mud 🟤" )
     , ( 2, "Soft Serve 🍦" )
     , ( 3, "Pushed Clay \u{1FAE0}" )
-    , ( 4, "Window breaker \u{1FAA8}" )
-    , ( 5, "Shower after 💩🚿" )
+    , ( 4, "Ride the Snake 🐍" )
+    , ( 5, "Shower after 🚿" )
     , ( 6, "Green Eggs and Ham 🍳" )
-    , ( 7, "No wiper ✨✨" )
-    , ( 8, "Passed out pushing" )
+    , ( 7, "No Wiper ✨✨" )
+    , ( 8, "Passed out 🥵 pushing" )
     , ( 9, "Lost 5lbs ⚖️" )
     , ( 10, "Filled the bowl 🥣" )
     , ( 11, "Floater \u{1F6DF}" )
@@ -102,13 +102,13 @@ view session (Model model) =
 
 viewContent : Session -> Internal -> Html Msg
 viewContent session model =
-    Html.div [ Attributes.class "p-4  space-y-6" ]
+    Html.div [ Attributes.class "p-6 space-y-6" ]
         [ Html.div [ Attributes.class "text-center" ]
             [ Html.div [ Attributes.class "flex justify-center text-center" ]
                 [ Html.img [ Attributes.class "w-24", Attributes.src "/images/logo.png" ] []
                 ]
             , Html.span [ Attributes.class "block font-bold text-4xl pt-3" ]
-                [ Html.text "Push Notify"
+                [ Html.text "Push 💨 Notify"
                 ]
             ]
         , items
@@ -138,7 +138,7 @@ viewItemButton model ( key, itemName ) =
     Html.button
         [ Events.onClick (ClickedItem ( key, itemName ))
         , Attributes.classList
-            [ ( "border border-white rounded-md px-4 font-semibold text-sm h-20 leading-tight", True )
+            [ ( "border border-white rounded-md px-4 font-semibold text-sm h-20 leading-snug", True )
             , ( "bg-[#663217]", isSelected )
             ]
         ]

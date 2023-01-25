@@ -12,7 +12,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         app: "index.html",
-        images: "public/images/icons-180.png",
       },
       // output: {
       //   assetFileNames: "assets/[name].[ext]",
