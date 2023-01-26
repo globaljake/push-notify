@@ -1,9 +1,11 @@
 module Page.Home exposing (Model, Msg, init, subscriptions, update, view)
 
+import Array
 import Dict exposing (Dict)
 import Html exposing (Html)
 import Html.Attributes as Attributes
 import Html.Events as Events
+import Html.Extra as Html
 import RemoteData exposing (RemoteData)
 import Session as Session exposing (Session)
 import Ui.Share as Share
@@ -20,7 +22,7 @@ type Model
 
 type alias Internal =
     { location : String
-    , items : Dict Int String
+    , items : List Int
     }
 
 
@@ -30,35 +32,43 @@ type alias Internal =
 
 init : Session -> ( Model, Cmd Msg )
 init session =
-    ( Model { location = "", items = Dict.empty }
+    ( Model { location = "", items = [] }
     , Cmd.none
     )
 
 
-items : List ( Int, String )
-items =
-    [ ( 1, "Pushed Clay \u{1FAB5}" )
-    , ( 2, "Soft Serve 🍦" )
-    , ( 3, "Blow Mud 🌋" )
-    , ( 4, "Ride the Snake 🐍" )
-    , ( 5, "Shower after 🚿" )
-    , ( 6, "Green Eggs and Ham 🍳" )
-    , ( 7, "No Wiper ✨✨" )
-    , ( 8, "Passed out 🥵 pushing" )
-    , ( 9, "Lost 5lbs ⚖️" )
-    , ( 10, "Filled the bowl 🥣" )
-    , ( 11, "Floater \u{1F6DF}" )
-    , ( 12, "Pebble Beach ⛳️" )
-    , ( 13, "Hunt for Red Oct 🦑" )
-    , ( 14, "Just gave birth 👶" )
-    , ( 15, "Like Clockwork ☕️" )
-    , ( 16, "Unfamiliar Smell \u{1F978}" )
-    , ( 17, "Legs fell asleep 💤" )
-    , ( 18, "Multi-Flusher 🚽" )
-    , ( 19, "Disgusted myself 🤢" )
-    , ( 20, "Used bidet ⛲️" )
-    , ( 21, "False Alarm 🚨" )
+itemDict : Dict Int String
+itemDict =
+    [ "Push Clay \u{1FAB5}"
+    , "Soft Serve 🍦"
+    , "Blow Mud 🌋"
+    , "Ride the Snake 🐍"
+    , "Shower after 🚿"
+    , "Green Eggs and Ham 🍳"
+    , "No Wiper ✨✨"
+    , "Passed out 🥵 pushing"
+    , "Lost 5lbs ⚖️"
+    , "Filled the bowl 🥣"
+    , "Floater \u{1F6DF}"
+    , "Pebble Beach ⛳️"
+    , "Hunt for Red Oct 🦑"
+    , "Just gave birth 👶"
+    , "Like Clockwork ☕️"
+    , "Stopped Up 🧀"
+    , "Courtesy Flush ❤️"
+    , "Window Breaker \u{1FAA8}"
+    , "Beached Whale 🐋"
+    , "Jackson Pollock 🎨"
+    , "Found Gold 🌽"
+    , "Unfamiliar Smell \u{1F978}"
+    , "Legs fell asleep 💤"
+    , "Multi-Flusher 🚽"
+    , "Disgusted myself 🤢"
+    , "Used bidet ⛲️"
+    , "False Alarm 🚨"
     ]
+        |> List.indexedMap (\i v -> ( i + 1, v ))
+        |> Dict.fromList
 
 
 
@@ -84,12 +94,11 @@ update msg (Model model) =
             ClickedItem ( key, item ) ->
                 ( { model
                     | items =
-                        case Dict.get key model.items of
-                            Just _ ->
-                                Dict.remove key model.items
+                        if List.member key model.items then
+                            List.filter ((/=) key) model.items
 
-                            Nothing ->
-                                Dict.insert key item model.items
+                        else
+                            List.concat [ model.items, [ key ] ]
                   }
                 , Cmd.none
                 )
@@ -115,7 +124,8 @@ viewContent session model =
                 [ Html.text "Push 💨 Notify"
                 ]
             ]
-        , items
+        , itemDict
+            |> Dict.toList
             |> List.map (viewItemButton model)
             |> Html.div [ Attributes.class "grid grid-cols-3 gap-4" ]
         , Html.input
@@ -125,6 +135,8 @@ viewContent session model =
             ]
             []
         , viewShareButton model
+
+        -- , Html.div [] [ Html.text <| toShareMessage model ]
         ]
 
 
@@ -132,21 +144,37 @@ viewItemButton : Internal -> ( Int, String ) -> Html Msg
 viewItemButton model ( key, itemName ) =
     let
         isSelected =
-            case Dict.get key model.items of
-                Just _ ->
-                    True
+            List.member key model.items
 
-                Nothing ->
-                    False
+        order =
+            model.items
+                |> List.indexedMap Tuple.pair
+                |> List.foldl
+                    (\( i, v ) acc ->
+                        if v == key then
+                            i + 1
+
+                        else
+                            acc
+                    )
+                    0
     in
-    Html.button
-        [ Events.onClick (ClickedItem ( key, itemName ))
-        , Attributes.classList
-            [ ( "border border-white rounded-md px-3  text-center font-semibold text-sm h-20 leading-snug", True )
-            , ( "bg-[#663217]", isSelected )
+    Html.div [ Attributes.class "relative" ]
+        [ Html.button
+            [ Events.onClick (ClickedItem ( key, itemName ))
+            , Attributes.classList
+                [ ( "border border-white rounded-md px-3 w-full text-center font-semibold text-sm h-20 leading-snug", True )
+                , ( "bg-[#663217]", isSelected )
+                ]
             ]
-        ]
-        [ Html.text itemName
+            [ Html.text itemName
+            ]
+        , Html.viewIf isSelected <|
+            Html.div [ Attributes.class "absolute top-0 right-0 pointer-events-none" ]
+                [ Html.div [ Attributes.class "-mt-2 -mr-2 rounded-full font-bold bg-[#663217] border border-white flex justify-center items-center w-5 h-5 text-xs" ]
+                    [ Html.text (String.fromInt order)
+                    ]
+                ]
         ]
 
 
@@ -163,7 +191,9 @@ toShareMessage : Internal -> String
 toShareMessage model =
     let
         itemMessage =
-            model.items |> Dict.values |> String.join ", "
+            model.items
+                |> List.filterMap (\k -> Dict.get k itemDict)
+                |> String.join ", "
     in
     String.join ""
         [ "💩 PUSH NOTIFY @ [TIME]"
