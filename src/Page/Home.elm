@@ -37,9 +37,9 @@ init session =
 
 items : List ( Int, String )
 items =
-    [ ( 1, "Blew Mud 🟤" )
+    [ ( 1, "Pushed Clay \u{1FAB5}" )
     , ( 2, "Soft Serve 🍦" )
-    , ( 3, "Pushed Clay \u{1FAE0}" )
+    , ( 3, "Blow Mud 🌋" )
     , ( 4, "Ride the Snake 🐍" )
     , ( 5, "Shower after 🚿" )
     , ( 6, "Green Eggs and Ham 🍳" )
@@ -49,12 +49,15 @@ items =
     , ( 10, "Filled the bowl 🥣" )
     , ( 11, "Floater \u{1F6DF}" )
     , ( 12, "Pebble Beach ⛳️" )
-    , ( 13, "False Alarm 🚨" )
-    , ( 14, "Just gave birth \u{1FAC3}" )
+    , ( 13, "Hunt for Red Oct 🦑" )
+    , ( 14, "Just gave birth 👶" )
     , ( 15, "Like Clockwork ☕️" )
-    , ( 16, "Unfamiliar Smell 👃" )
+    , ( 16, "Unfamiliar Smell \u{1F978}" )
     , ( 17, "Legs fell asleep 💤" )
     , ( 18, "Multi-Flusher 🚽" )
+    , ( 19, "Disgusted myself 🤢" )
+    , ( 20, "Used bidet ⛲️" )
+    , ( 21, "False Alarm 🚨" )
     ]
 
 
@@ -163,7 +166,7 @@ toShareMessage model =
             model.items |> Dict.values |> String.join ", "
     in
     String.join ""
-        [ "PUSH 💨 NOTIFY 💩 @ [TIME]"
+        [ "💩 PUSH NOTIFY @ [TIME]"
         , if String.isEmpty model.location then
             ""
 
