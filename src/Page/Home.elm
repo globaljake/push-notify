@@ -65,10 +65,13 @@ itemDict =
     , "Birthday Suit 🍑"
     , "$5 Footlong 🥖"
     , "Unfinished Business 😔"
-    , "Very Messi ⚽️"
+    , "Trombone solo 📯"
     , "I gotta stop 😩"
     , "Needed a break ⌛️"
     , "Truper 🚔"
+    , "Very Messi ⚽️"
+    , "Relieved from doodie 🎖️"
+    , "Splash Zone 🐳"
     , "Unfamiliar Smell \u{1F978}"
     , "Legs fell asleep 💤"
     , "Multi-Flusher 🚽"
@@ -122,7 +125,7 @@ update msg (Model model) =
 
 view : Session -> Model -> Template.Content Msg
 view session (Model model) =
-    Template.content ( "Home", viewContent session model )
+    Template.content ( "Push Notify", viewContent session model )
 
 
 viewContent : Session -> Internal -> Html Msg
