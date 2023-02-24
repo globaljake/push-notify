@@ -4,8 +4,6 @@ const getTime = () => {
   return `${hr}:${min} ${rest.split(" ")[1]}`;
 };
 
-const isMobile = () => window.orientation > 1;
-
 export default {
   start: (_app) =>
     customElements.define(
@@ -31,9 +29,13 @@ export default {
             if (this._text) {
               const message = this._text.replace("[TIME]", getTime());
 
-              if (isMobile()) {
-                navigator.share({ text: message });
-              } else {
+              try {
+                navigator.share({ text: message }).catch(() => {
+                  navigator.clipboard.writeText(message).then(() => {
+                    alert("Copied to clipboard 💩");
+                  });
+                });
+              } catch (e) {
                 navigator.clipboard.writeText(message).then(() => {
                   alert("Copied to clipboard 💩");
                 });
