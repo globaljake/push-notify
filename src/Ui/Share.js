@@ -22,12 +22,18 @@ export default {
         }
 
         connectedCallback() {
-          if (!navigator.clipboard && !navigator.share) return;
+          if (!navigator.clipboard && !navigator.share) {
+            console.warn(
+              "no clipboard or share functionality found on browser"
+            );
+            return;
+          }
 
           const button = this.querySelector("button");
           button.addEventListener("click", () => {
             if (this._text) {
-              const message = this._text.replace("[TIME]", getTime());
+              const baseMessage = this._text.replace("[TIME]", getTime());
+              const message = `${baseMessage}\n\nhttps://push-notify.globaljake.com.`;
 
               try {
                 navigator.share({ text: message }).catch(() => {
