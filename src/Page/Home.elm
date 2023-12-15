@@ -44,7 +44,7 @@ itemDict =
     , "Blow Mud 🌋"
     , "Ride the Snake 🐍"
     , "Shower after 🚿"
-    , "Green Eggs and Ham 🍳"
+    , "Green Monster 🏟️"
     , "No Wiper ✨✨"
     , "Passed out 🥵 pushing"
     , "Lost 5lbs ⚖️"
