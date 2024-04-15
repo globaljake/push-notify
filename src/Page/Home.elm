@@ -7,7 +7,7 @@ import Html.Attributes as Attributes
 import Html.Events as Events
 import Html.Extra as Html
 import RemoteData exposing (RemoteData)
-import Session as Session exposing (Session)
+import Session exposing (Session)
 import Ui.Share as Share
 import Ui.Template as Template
 
@@ -39,48 +39,54 @@ init session =
 
 itemDict : Dict Int String
 itemDict =
-    [ "Push Clay \u{1FAB5}"
-    , "Soft Serve 🍦"
-    , "Blow Mud 🌋"
-    , "Ride the Snake 🐍"
-    , "Shower after 🚿"
-    , "Green Monster 🏟️"
+    [ "Push clay 🪵"
+    , "Soft serve 🍦"
+    , "Blow mud 🌋"
+    , "Ride the snake 🐍"
+    , "Green monster 🏟️"
+    , "Floater 🛟"
+    , "Pebble beach ⛳️"
+    , "Shippin' bricks 🧱"
+    , "Liquidump 🌊"
+    , "Jackson Pollock 🎨"
+    , "Beached whale 🐋"
+    , "Spittin' fire 🎤🔥"
+    , "$5 footlong 🥖"
+    , "Filled the bowl 🥣"
+    , "Very Messi ⚽️"
     , "No Wiper ✨✨"
+    , "Shower after 🚿"
+    , "Like clockwork ☕️"
     , "Passed out 🥵 pushing"
     , "Lost 5lbs ⚖️"
-    , "Filled the bowl 🥣"
-    , "Floater \u{1F6DF}"
-    , "Pebble Beach ⛳️"
-    , "Hunt for Red Oct 🦑"
-    , "Just gave birth 👶"
-    , "Like Clockwork ☕️"
-    , "Shippin' Bricks 🧱"
-    , "Courtesy Flush ❤️"
-    , "Liquidump 🌊"
-    , "Big Honk 📢"
-    , "Jackson Pollock 🎨"
-    , "Proud Father 👨\u{200D}🦰"
-    , "Beached Whale 🐋"
-    , "Spittin' fire 🎤🔥"
-    , "Birthday Suit 🍑"
-    , "$5 Footlong 🥖"
-    , "Unfinished Business 😔"
-    , "Trombone solo 📯"
     , "I gotta stop 😩"
+    , "Big honk 📢"
+    , "Birthday suit 🍑"
+    , "Courtesy flush ❤️"
+    , "Just gave birth 👶"
+    , "Nervous poops 😅"
+    , "Proud father 👨\u{200D}🦰"
+    , "Unfinished business 😔"
+    , "Trombone solo 📯"
+    , "Didn't pee 🚫"
+    , "Gambled and lost 🎲"
     , "Needed a break ⌛️"
-    , "Truper 🚔"
-    , "Very Messi ⚽️"
+    , "Held it in too long 🫥"
     , "Relieved from doodie 🎖️"
-    , "Splash Zone 🐳"
-    , "Unfamiliar Smell \u{1F978}"
+    , "Someone elses problem 💀"
+    , "Pooper Truper 🚔"
+    , "Splash zone 🐳"
+    , "Need for speed 🏎️"
+    , "Hunt for red Oct 🦑"
+    , "Unfamiliar smell 🥸"
     , "Legs fell asleep 💤"
     , "Multi-Flusher 🚽"
-    , "Stopped Up 🧀"
+    , "Stopped up 🧀"
     , "Praying 🙏"
-    , "Found Gold 🌽"
+    , "Found gold 🌽"
     , "Disgusted myself 🤢"
     , "Used bidet ⛲️"
-    , "False Alarm 🚨"
+    , "False alarm 🚨"
     ]
         |> List.indexedMap (\i v -> ( i + 1, v ))
         |> Dict.fromList
@@ -143,15 +149,23 @@ viewContent session model =
             |> Dict.toList
             |> List.map (viewItemButton model)
             |> Html.div [ Attributes.class "grid grid-cols-3 gap-4" ]
+        , viewHeader "Location"
         , Html.input
             [ Events.onInput EnteredLocation
             , Attributes.class "border border-white text-white rounded p-3 bg-transparent w-full"
-            , Attributes.placeholder "Location"
+            , Attributes.placeholder "Your current location"
             ]
             []
         , viewShareButton model
 
         -- , Html.div [] [ Html.text <| toShareMessage model ]
+        ]
+
+
+viewHeader : String -> Html msg
+viewHeader text =
+    Html.div []
+        [ Html.span [ Attributes.class "font-semibold" ] [ Html.text text ]
         ]
 
 
